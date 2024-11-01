@@ -4,7 +4,11 @@ export default {
   content: ['./src/**/*.{html,js,svelte,ts}'],
 
   theme: {
-    extend: {}
+    extend: {
+      animation: {
+        'spin-slow': 'spin 24s linear infinite',
+      },
+    }
   },
 
   plugins: []

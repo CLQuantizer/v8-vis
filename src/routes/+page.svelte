@@ -1,22 +1,7 @@
 <script lang="ts">
-    import { fade } from 'svelte/transition';
-
-    type Status = 'idle' | 'running' | 'paused' | 'complete';
-    type EventType = 'fetch' | 'setTimeout' | 'DOM' | 'promise' | 'requestAnimationFrame' | 'database' | 'imageLoad';
-
-    interface QueueItem {
-        id: number;
-        text: string;
-        type: EventType;
-        duration: number;
-    }
-
-    interface ScheduledEvent {
-        callback: () => void;
-        remainingDelay: number;
-        timer: NodeJS.Timeout | null;
-        startTime?: number;
-    }
+    import {fade} from 'svelte/transition';
+    import type {EventType, QueueItem, ScheduledEvent, Status} from "./types";
+    import Spinner from "./Spinner.svelte";
 
     let callStack: QueueItem[] = [];
     let webAPI: QueueItem[] = [];
@@ -76,12 +61,10 @@
             startTime: Date.now()
         };
 
-        const timer = setTimeout(() => {
+        event.timer = setTimeout(() => {
             callback();
             scheduledEvents = scheduledEvents.filter(e => e !== event);
         }, delay);
-
-        event.timer = timer;
         scheduledEvents = [...scheduledEvents, event];
     }
 
@@ -244,6 +227,7 @@
         </div>
     </div>
 
+    <Spinner />
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <!-- Call Stack -->
         <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
@@ -311,7 +295,7 @@
     <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
         <h3 class="text-lg font-semibold text-gray-800 mb-2">Console Output</h3>
         <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm h-[200px] overflow-y-auto">
-            {#each output as line}
+            {#each [...output].reverse() as line}
                 <div transition:fade class="mb-1">
                     {line}
                 </div>
