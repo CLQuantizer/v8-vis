@@ -206,9 +206,9 @@
 </script>
 
 <div class="max-w-6xl mx-auto p-6 space-y-6">
-    <div class="flex justify-between items-center">
+    <div class="flex m:flex-col md:flex-row justify-between items-center gap-2">
         <h2 class="text-2xl font-bold text-gray-900">JavaScript Event Loop Visualization</h2>
-        <div class="space-x-4">
+        <div class="flex gap-2">
             <button
                     on:click={simulateEventLoop}
                     disabled={status === 'running' || status === 'paused'}
@@ -231,8 +231,9 @@
             </button>
         </div>
     </div>
-
-    <Spinner {status}/>
+    <div class="w-full justify-center flex">
+        <Spinner {status}/>
+    </div>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <!-- Call Stack -->
         <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
@@ -306,5 +307,20 @@
                 </div>
             {/each}
         </div>
+    </div>
+    <!--  Comment  -->
+    <div class="text-gray-700">
+        This is a simple visualization of executing a main function in JavaScript.
+        In the main function, we simulate a series of events:
+        <ul class="list-decimal list-inside mt-2 space-y-2">
+            <li>Starting a large image load (3000ms)</li>
+            <li>Starting a database query (2500ms)</li>
+            <li>Creating a Promise for a Microtask</li>
+            <li>Completing the database query</li>
+            <li>Completing the image load</li>
+            <li>Processing the Promise callback</li>
+            <li>Processing the database callback</li>
+            <li>Processing the image callback</li>
+        </ul>
     </div>
 </div>

@@ -8,6 +8,9 @@ export default {
       animation: {
         'spin-slow': 'spin 24s linear infinite',
       },
+      screens: {
+        'm': '220px',
+      }
     }
   },
 
