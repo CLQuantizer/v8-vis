@@ -6,6 +6,9 @@ node_modules
 /.svelte-kit
 /build
 
+wrangler.toml
+.idea
+.wrangler
 # OS
 .DS_Store
 Thumbs.db
