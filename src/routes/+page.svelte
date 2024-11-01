@@ -2,6 +2,7 @@
     import {fade} from 'svelte/transition';
     import type {EventType, QueueItem, ScheduledEvent, Status} from "./types";
     import Spinner from "./Spinner.svelte";
+    import {onMount} from "svelte";
 
     let callStack: QueueItem[] = [];
     let webAPI: QueueItem[] = [];
@@ -198,6 +199,10 @@
             output = [...output, '13. Execution complete'];
         }, 7000);
     }
+
+    onMount(() => {
+        simulateEventLoop();
+    });
 </script>
 
 <div class="max-w-6xl mx-auto p-6 space-y-6">
@@ -227,7 +232,7 @@
         </div>
     </div>
 
-    <Spinner />
+    <Spinner {status}/>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <!-- Call Stack -->
         <div class="border border-gray-200 rounded-lg p-4 shadow-sm">
